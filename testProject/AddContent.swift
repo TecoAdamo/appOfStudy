@@ -7,19 +7,26 @@
 
 import SwiftUI
 
+struct Convidado: Identifiable, Hashable {
+    let id = UUID()
+    let nome: String
+    var isFavorite: Bool
+}
+
 struct AddContent: View {
     
 // @State: usamos para armazenar valores que podem mudar, como o texto do input.
     @State private var nomeDigitado = ""
     @State private  var errorMessage = ""
-    @State private var listaNomes: [String] = []
+    @State private var listaNomes: [Convidado] = []
+    @State private var onlyFavorite = false
     
     @FocusState private var isFocused: Bool
     
     var body: some View {
             ZStack {
                 LinearGradient(
-                    gradient: Gradient(colors: [.cyan, .green]),
+                    gradient: Gradient(colors: [.indigo, .purple]),
                     // startPoint vamos dizer onde comeca o degrade
                     startPoint: .topLeading,
                     // endPoint informamos onde termina o degrade
@@ -38,17 +45,18 @@ struct AddContent: View {
                             .padding()
                             .background(Color.white.opacity(0.5))
                             .cornerRadius(12)
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(Color.white.opacity(0.3), lineWidth: 1)
                             )
+
                         
                         Button(action: validateTextField) {
                             HStack {
                                 Text("Adicionar")
                                     .fontWeight(.semibold)
-                                Image(systemName: "plus.app.fill") 
+                                Image(systemName: "plus.app.fill")
                             }
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -72,17 +80,28 @@ struct AddContent: View {
                     .padding(.horizontal)
                     
                     ScrollView {
+                        let convidadosFiltrados = onlyFavorite
+                            ? listaNomes.filter { $0.isFavorite }
+                            : listaNomes
+                        HStack{
+                            Toggle("Convidados Vip ⭐️", isOn: $onlyFavorite)
+                                .toggleStyle(SwitchToggleStyle(tint: .yellow))
+                                .padding(.horizontal)
+                                .foregroundColor(.white)
+
+                        }
                         VStack(spacing: 12) {
-                            ForEach(listaNomes, id: \.self) { nome in
-                                NameItem(nome: nome){
-                                    removeName(nome)
+                                    ForEach(convidadosFiltrados, id: \.self) { convidado in
+                                        NameItem(
+                                            onDelete: { removeName(convidado) },
+                                            convidado: convidado,
+                                            onToggleFavorite: { toggleFavorite(convidado) }
+                                        )
+                                        .transition(.move(edge: .trailing).combined(with: .opacity))
+                                    }
                                 }
-                                .transition(.move(edge: .trailing).combined(with: .opacity))
-                            }
-                            .animation(.snappy, value: listaNomes)
-                            }
-                        
-                        .padding(.horizontal)
+                                .padding(.horizontal)
+                                .animation(.snappy, value: listaNomes)
                     }
                 }
                 .padding(.top)
@@ -98,18 +117,25 @@ struct AddContent: View {
             errorMessage = "Preencha o input para cadastrar"
         } else {
             //senao estiver vazio, add o nome na lista e depois setamos pra " " vazia novamente
-            listaNomes.append(nomeLimpo)
+            listaNomes.append(Convidado(nome: nomeLimpo, isFavorite: false))
+
             nomeDigitado = ""
             errorMessage = ""
         }
     }
-    func removeName(_ nome: String){
+    func removeName(_ convidado: Convidado){
         withAnimation {
             // aqui ta "procure o índice (posição) desse nome dentro da lista listaNomes. Se encontrar, me dá esse índice.
-            if let index = listaNomes.firstIndex(of: nome) {
+            if let index = listaNomes.firstIndex(of: convidado) {
                 // Se o índice foi encontrado, ai remove o nome daquela posição na lista.
                 listaNomes.remove(at: index)
             }
+        }
+    }
+    
+    func toggleFavorite(_ convidado: Convidado) {
+        if let index = listaNomes.firstIndex(of: convidado) {
+            listaNomes[index].isFavorite.toggle()
         }
     }
 }

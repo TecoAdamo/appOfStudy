@@ -8,18 +8,27 @@
 import SwiftUI
 
 struct NameItem: View {
-    let nome: String
     let onDelete: () -> Void
+    let convidado: Convidado
+    let onToggleFavorite: () -> Void
     
     var body: some View {
         HStack {
-            Text(nome)
+            Text(convidado.nome)
                 .font(.headline)
                 .foregroundColor(.blue)
             
             Spacer()
             
+            Button(action: onToggleFavorite ) {
+                
+                Image(systemName: convidado.isFavorite ? "star.fill" : "star")
+                    .foregroundColor(.yellow)
+            }
+            .buttonStyle(PlainButtonStyle())
+            
             Button(action: onDelete) {
+                
                 Image(systemName: "trash")
                     .foregroundColor(.red)
             }
