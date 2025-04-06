@@ -14,16 +14,20 @@ struct AddContent: View {
     @State private  var errorMessage = ""
     @State private var listaNomes: [String] = []
     
+    @FocusState private var isFocused: Bool
+    
     var body: some View {
             ZStack {
                 LinearGradient(
-                    gradient: Gradient(colors: [.indigo, .purple]),
+                    gradient: Gradient(colors: [.cyan, .green]),
+                    // startPoint vamos dizer onde comeca o degrade
                     startPoint: .topLeading,
+                    // endPoint informamos onde termina o degrade
                     endPoint: .bottomTrailing
                 )
                 .ignoresSafeArea()
                 
-                VStack(spacing: 24) {
+                VStack(spacing: 34) {
                     
                     Text("Convit")
                         .font(.largeTitle.bold())
@@ -32,7 +36,7 @@ struct AddContent: View {
                     VStack(spacing: 16) {
                         TextField("Insira um nome para o convite:  ", text: $nomeDigitado)
                             .padding()
-                            .background(Color.white.opacity(0.15))
+                            .background(Color.white.opacity(0.5))
                             .cornerRadius(12)
                             .foregroundColor(.white)
                             .overlay(
@@ -41,29 +45,31 @@ struct AddContent: View {
                             )
                         
                         Button(action: validateTextField) {
-                            Text("Adicionar")
-                                .fontWeight(.semibold)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.white)
-                                .foregroundColor(.indigo)
-                                .cornerRadius(12)
-                                .shadow(radius: 3)
+                            HStack {
+                                Text("Adicionar")
+                                    .fontWeight(.semibold)
+                                Image(systemName: "plus.app.fill") 
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .cornerRadius(12)
+                            .shadow(radius: 3)
                         }
+
                         
                         if !errorMessage.isEmpty {
                             Text(errorMessage)
                                 .font(.headline)
-                                .padding(.top, -8)
                                 .foregroundColor(.white)
+                                
                         }
                     }
-                    .padding()
+                    .padding(24)
                     .background(Color.white.opacity(0.05))
                     .cornerRadius(16)
                     .padding(.horizontal)
-                    
-                    Divider().background(.white.opacity(0.2))
                     
                     ScrollView {
                         VStack(spacing: 12) {
@@ -73,7 +79,7 @@ struct AddContent: View {
                                 }
                                 .transition(.move(edge: .trailing).combined(with: .opacity))
                             }
-                            .animation(.easeInOut, value: listaNomes)
+                            .animation(.snappy, value: listaNomes)
                             }
                         
                         .padding(.horizontal)
@@ -83,11 +89,15 @@ struct AddContent: View {
             }
         }
     func validateTextField() {
+        // aqui retira espacos em branco
         let nomeLimpo = nomeDigitado.trimmingCharacters(in: .whitespaces)
 
+        // aqui checamos se esta vazio
         if nomeLimpo.isEmpty {
+            // se estiver vazio, exibimos o errorMessage
             errorMessage = "Preencha o input para cadastrar"
         } else {
+            //senao estiver vazio, add o nome na lista e depois setamos pra " " vazia novamente
             listaNomes.append(nomeLimpo)
             nomeDigitado = ""
             errorMessage = ""
@@ -95,7 +105,9 @@ struct AddContent: View {
     }
     func removeName(_ nome: String){
         withAnimation {
+            // aqui ta "procure o índice (posição) desse nome dentro da lista listaNomes. Se encontrar, me dá esse índice.
             if let index = listaNomes.firstIndex(of: nome) {
+                // Se o índice foi encontrado, ai remove o nome daquela posição na lista.
                 listaNomes.remove(at: index)
             }
         }

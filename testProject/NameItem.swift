@@ -15,7 +15,7 @@ struct NameItem: View {
         HStack {
             Text(nome)
                 .font(.headline)
-                .foregroundColor(.indigo)
+                .foregroundColor(.blue)
             
             Spacer()
             
