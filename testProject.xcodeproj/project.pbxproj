@@ -11,6 +11,8 @@
 		274A4D802DA2664400615723 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274A4D7F2DA2664400615723 /* ContentView.swift */; };
 		274A4D822DA2664800615723 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 274A4D812DA2664800615723 /* Assets.xcassets */; };
 		274A4D852DA2664800615723 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 274A4D842DA2664800615723 /* Preview Assets.xcassets */; };
+		274A4D8C2DA2B57500615723 /* AddContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274A4D8B2DA2B57500615723 /* AddContent.swift */; };
+		274A4D8E2DA2C07700615723 /* NameItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274A4D8D2DA2C07700615723 /* NameItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		274A4D7F2DA2664400615723 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		274A4D812DA2664800615723 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		274A4D842DA2664800615723 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		274A4D8B2DA2B57500615723 /* AddContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContent.swift; sourceTree = "<group>"; };
+		274A4D8D2DA2C07700615723 /* NameItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +55,8 @@
 		274A4D7C2DA2664400615723 /* testProject */ = {
 			isa = PBXGroup;
 			children = (
+				274A4D8D2DA2C07700615723 /* NameItem.swift */,
+				274A4D8B2DA2B57500615723 /* AddContent.swift */,
 				274A4D7D2DA2664400615723 /* testProjectApp.swift */,
 				274A4D7F2DA2664400615723 /* ContentView.swift */,
 				274A4D812DA2664800615723 /* Assets.xcassets */,
@@ -138,7 +144,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				274A4D802DA2664400615723 /* ContentView.swift in Sources */,
+				274A4D8E2DA2C07700615723 /* NameItem.swift in Sources */,
 				274A4D7E2DA2664400615723 /* testProjectApp.swift in Sources */,
+				274A4D8C2DA2B57500615723 /* AddContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
